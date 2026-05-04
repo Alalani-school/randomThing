@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Group Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <div id="auth-section">
+            <h2>Login or Register</h2>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <div class="auth-buttons">
+                <button id="login-btn">Login</button>
+                <button id="signup-btn">Sign Up</button>
+            </div>
+            <p id="auth-error" class="error-msg"></p>
+        </div>
+
+        <div id="chat-section" class="hidden">
+            <div class="chat-header">
+                <h2>Group Chat</h2>
+                <button id="logout-btn">Logout</button>
+            </div>
+            
+            <div id="admin-panel" class="hidden">
+                <h3>Admin Panel 🛠️</h3>
+                <p>Status: Administrator verified.</p>
+                <button id="clear-chat-btn">⚠️ Clear All Messages</button>
+            </div>
+
+            <div id="message-list"></div>
+            
+            <div class="chat-input-area">
+                <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
