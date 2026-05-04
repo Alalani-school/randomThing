@@ -1,10 +1,8 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://qrpmswbzpxlmcewcpwjt.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_0kPRskl1eRhvRRZPWr4SCA_q1k-WTKU';
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// DOM Elements
 const authSection = document.getElementById('auth-section');
 const chatSection = document.getElementById('chat-section');
 const adminPanel = document.getElementById('admin-panel');
@@ -16,15 +14,11 @@ const authError = document.getElementById('auth-error');
 
 let currentUser = null;
 let currentProfile = null;
-
-// Initialize Application
 async function init() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
         await handleLoginSuccess(session.user);
     }
-
-    // Listen for auth changes
     supabase.auth.onAuthStateChange((_event, session) => {
         if (session) {
             handleLoginSuccess(session.user);
@@ -33,14 +27,10 @@ async function init() {
         }
     });
 }
-
-// Authentication Logic
 async function handleLoginSuccess(user) {
     currentUser = user;
     authSection.classList.add('hidden');
     chatSection.classList.remove('hidden');
-    
-    // Fetch user profile to check admin status
     const { data, error } = await supabase
         .from('profiles')
         .select('is_admin')
@@ -89,7 +79,6 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
     await supabase.auth.signOut();
 });
 
-// Chat Logic
 async function loadMessages() {
     const { data, error } = await supabase
         .from('messages')
