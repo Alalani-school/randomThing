@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supabase Group Chat</title>
+    <title>Supabase Group Chat Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,15 +27,26 @@
             
             <div id="admin-panel" class="hidden">
                 <h3>Admin Panel 🛠️</h3>
-                <p>Status: Administrator verified.</p>
-                <button id="clear-chat-btn">⚠️ Clear All Messages</button>
+                <div class="admin-controls">
+                    <button id="toggle-chat-btn">⏸️ Pause Chat</button>
+                    <button id="clear-chat-btn">⚠️ Clear Messages</button>
+                </div>
             </div>
 
+            <div id="pinned-section" class="hidden">
+                <strong>📌 Pinned:</strong>
+                <span id="pinned-content"></span>
+            </div>
             <div id="message-list"></div>
-            
             <div class="chat-input-area">
-                <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
-                <button id="send-btn">Send</button>
+                <div id="reply-indicator" class="hidden">
+                    Replying to: <span id="reply-target"></span> 
+                    <button id="cancel-reply">x</button>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                    <button id="send-btn">Send</button>
+                </div>
             </div>
         </div>
     </div>
