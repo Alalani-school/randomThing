@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupaChat Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div id="app-container">
+        <div id="auth-section">
+            <h2>Login or Register</h2>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <div class="auth-buttons">
+                <button id="login-btn">Login</button>
+                <button id="signup-btn">Sign Up</button> </div>
+            <p id="auth-error" class="error-msg"></p>
+        </div>
+
+        <div id="chat-section" class="hidden">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h3>SupaChat</h3>
+                    <button id="theme-toggle">☀️/🌙</button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search messages...">
+                </div>
+                <div class="channel-list">
+                    <h4>Channels</h4>
+                    <ul id="channels">
+                        <li class="active-channel" data-id="general"># general</li>
+                        <li data-id="announcements"># announcements</li>
+                        <li data-id="premium"># premium 👑</li>
+                    </ul>
+                </div>
+                <div class="user-info">
+                    <span id="current-user-email">Loading...</span>
+                    <button id="logout-btn">Logout</button>
+                </div>
+            </aside>
+
+            <main class="chat-area">
+                <div class="chat-header">
+                    <h2 id="current-channel-name"># general</h2>
+                    <div id="typing-indicator" class="hidden">Someone is typing...</div>
+                </div>
+                
+                <div id="admin-panel" class="hidden">
+                    <h3>Admin Panel 🛠️</h3>
+                    <div class="admin-controls">
+                        <button id="toggle-chat-btn">⏸️ Pause Chat</button>
+                        <button id="clear-chat-btn">⚠️ Clear Messages</button>
+                    </div>
+                </div>
+
+                <div id="pinned-section" class="hidden">
+                    <strong>📌 Pinned:</strong> <span id="pinned-content"></span>
+                </div>
+                
+                <div id="message-list"></div>
+                
+                <div class="chat-input-area">
+                    <div id="reply-indicator" class="hidden">
+                        Replying to: <span id="reply-target"></span> 
+                        <button id="cancel-reply">x</button>
+                    </div>
+                    <div class="input-wrapper">
+                        <button id="attach-btn">📎</button>
+                        <input type="text" id="message-input" placeholder="Type a message... (Use OS Emoji picker: Win+. or Cmd+Ctrl+Space)" autocomplete="off">
+                        <button id="send-btn">Send</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
