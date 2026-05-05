@@ -3,74 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SupaChat Pro</title>
+    <title>SupaChat</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div id="app-container">
-        <div id="auth-section">
-            <h2>Login or Register</h2>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <div class="auth-buttons">
-                <button id="login-btn">Login</button>
-                <button id="signup-btn">Sign Up</button> </div>
-            <p id="auth-error" class="error-msg"></p>
+        <div id="auth-section" class="auth-wrapper">
+            <div class="auth-card">
+                <h2>Welcome to SupaChat</h2>
+                <p>Sign in to join the conversation</p>
+                <input type="email" id="email" placeholder="Email address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="auth-buttons">
+                    <button id="login-btn" class="btn-primary">Login</button>
+                    <button id="signup-btn" class="btn-secondary">Sign Up</button>
+                </div>
+                <p id="auth-error" class="error-msg"></p>
+            </div>
         </div>
 
-        <div id="chat-section" class="hidden">
+        <div id="chat-section" class="hidden app-layout">
             <aside class="sidebar">
                 <div class="sidebar-header">
                     <h3>SupaChat</h3>
-                    <button id="theme-toggle">☀️/🌙</button>
+                    <button id="theme-toggle" class="icon-btn" title="Toggle Theme">🌓</button>
                 </div>
-                <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Search messages...">
-                </div>
-                <div class="channel-list">
-                    <h4>Channels</h4>
-                    <ul id="channels">
-                        <li class="active-channel" data-id="general"># general</li>
-                        <li data-id="announcements"># announcements</li>
-                        <li data-id="premium"># premium 👑</li>
+                
+                <div class="channel-section">
+                    <h4 class="section-title">CHANNELS</h4>
+                    <ul id="channels" class="channel-list">
+                        <li class="active" data-id="general"><span class="hash">#</span> general</li>
+                        <li data-id="announcements"><span class="hash">#</span> announcements</li>
+                        <li data-id="premium"><span class="hash">#</span> premium 👑</li>
                     </ul>
                 </div>
-                <div class="user-info">
-                    <span id="current-user-email">Loading...</span>
-                    <button id="logout-btn">Logout</button>
+
+                <div class="user-panel">
+                    <div class="user-info">
+                        <div class="avatar" id="user-avatar"></div>
+                        <span id="current-user-email" class="email-truncate">Loading...</span>
+                    </div>
+                    <button id="logout-btn" class="icon-btn logout" title="Logout">🚪</button>
                 </div>
             </aside>
 
             <main class="chat-area">
-                <div class="chat-header">
-                    <h2 id="current-channel-name"># general</h2>
-                    <div id="typing-indicator" class="hidden">Someone is typing...</div>
-                </div>
-                
-                <div id="admin-panel" class="hidden">
-                    <h3>Admin Panel 🛠️</h3>
-                    <div class="admin-controls">
-                        <button id="toggle-chat-btn">⏸️ Pause Chat</button>
-                        <button id="clear-chat-btn">⚠️ Clear Messages</button>
+                <header class="chat-header">
+                    <div class="header-title">
+                        <span class="hash">#</span>
+                        <h2 id="current-channel-name">general</h2>
                     </div>
-                </div>
+                    
+                    <div id="admin-panel" class="hidden">
+                        <button id="toggle-chat-btn" class="btn-outline">⏸️ Pause Chat</button>
+                    </div>
+                </header>
 
-                <div id="pinned-section" class="hidden">
-                    <strong>📌 Pinned:</strong> <span id="pinned-content"></span>
-                </div>
-                
-                <div id="message-list"></div>
-                
-                <div class="chat-input-area">
-                    <div id="reply-indicator" class="hidden">
-                        Replying to: <span id="reply-target"></span> 
-                        <button id="cancel-reply">x</button>
+                <div id="message-list" class="message-container">
                     </div>
+
+                <div class="input-area">
                     <div class="input-wrapper">
-                        <button id="attach-btn">📎</button>
-                        <input type="text" id="message-input" placeholder="Type a message... (Use OS Emoji picker: Win+. or Cmd+Ctrl+Space)" autocomplete="off">
-                        <button id="send-btn">Send</button>
+                        <button class="icon-btn attach-btn">➕</button>
+                        <input type="text" id="message-input" placeholder="Message #general..." autocomplete="off">
+                        <button id="send-btn" class="icon-btn send-btn">📤</button>
                     </div>
                 </div>
             </main>
