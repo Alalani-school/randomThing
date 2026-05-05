@@ -137,3 +137,18 @@ body {
 .icon-btn:hover { color: var(--text-primary); }
 .btn-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 6px 12px; border-radius: 4px; cursor: pointer;}
 .btn-outline:hover { background: var(--danger); color: white; }
+/* Reaction & Avatar Additions */
+.avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+.user-text { display: flex; flex-direction: column; }
+.btn-premium { background: linear-gradient(45deg, #FFD700, #FFA500); color: black; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.btn-premium:hover { opacity: 0.9; }
+
+/* Emojis */
+.reaction-bar { display: flex; gap: 5px; margin-top: 5px; }
+.reaction-badge { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 2px 6px; font-size: 0.85em; cursor: pointer; display: flex; align-items: center; gap: 4px; color: var(--text-secondary); }
+.reaction-badge:hover { background: var(--bg-tertiary); }
+.reaction-badge.reacted { background: var(--accent); color: white; border-color: var(--accent); }
+
+.message-actions { display: flex; gap: 5px; }
+.emoji-picker-btn { background: none; border: none; cursor: pointer; padding: 4px; border-radius: 4px; filter: grayscale(100%); transition: 0.2s;}
+.emoji-picker-btn:hover { filter: grayscale(0%); background: var(--bg-secondary); }
