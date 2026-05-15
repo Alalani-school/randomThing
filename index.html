@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="https://example.com/icon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Processing Calculator(s)</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processing Calculator(s)</title>
+<link rel="icon" type="image/png" href="icon.png">
 <style>
     body {
         margin: 0;
@@ -58,143 +57,137 @@
 </head>
 
 <body>
-    <h1>Processing Calculator(s)</h1>
-    <button class="copy-btn idle" id="copyBtn">proportionalCalculatorV2</button>
-    <script>
-    const code = `import java.util.ArrayList;
+<h1>Processing Calculator(s)</h1>
+<button class="copy-btn idle" id="copyBtn">
+    proportionalCalculatorV2
+</button>
+<script>
+const code = `import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.awt.datatransfer.*;
 import java.awt.Toolkit;
 import java.util.Base64;
-
 class rate {
   float top, bottom;
-
   rate(float numerator, float denominator) {
     top = numerator;
     bottom = denominator;
   }
-
   float getNumerator() {
     return top;
   }
-
   float getDenominator() {
     return bottom;
   }
-
   rate simplified() {
     if (top > bottom) {
-      if (!isRepeating(top, bottom))
-        return new rate(top/bottom, 1);
-      else
-        return new rate(1, bottom/top);
+      if (!isRepeating(top, bottom)) return new rate(top/bottom, 1);
+      else return new rate(1, bottom/top);
     }
-
-    if (!isRepeating(bottom, top))
-      return new rate(1, bottom / top);
-    else
-      return new rate(top/bottom, 1);
+    if (!isRepeating(bottom, top)) return new rate(1, bottom / top);
+    else return new rate(top/bottom, 1);
   }
-
   boolean isRepeating(float numerator, float denominator) {
     float n = numerator;
     float d = denominator;
     float g = gcd(n, d);
-
     d /= g;
-
     while (d % 2 == 0) d /= 2;
     while (d % 5 == 0) d /= 5;
-
     return d != 1;
   }
-
   float gcd(float a, float b) {
     while (b != 0) {
       float t = b;
       b = a % b;
       a = t;
     }
-
     return abs(a);
   }
 }
-
 int number;
 float rate, x, y;
-
 ArrayList<rate> rates = new ArrayList<rate>();
-
 String output;
-
 void setup() {
   size(400, 200);
   background(0);
-
   try {
-    number = Integer.parseInt(
-      JOptionPane.showInputDialog(
-        "How many rates do you want to enter?"
-      )
-    );
-
+    number = Integer.parseInt(JOptionPane.showInputDialog("How many rates do you want to enter?"));
     output = "";
-
     String stringRate;
-
     for (int i = 0; i < number; i++) {
-      stringRate = JOptionPane.showInputDialog(
-        "Please type out the next rate as format x/y."
-      );
-
+      stringRate = JOptionPane.showInputDialog("Please type out the next rate as format x/y.");
       String[] parts = stringRate.split("/");
-
-      rates.add(
-        new rate(
-          Float.parseFloat(parts[0]),
-          Float.parseFloat(parts[1])
-        )
-      );
+      rates.add(new rate(Float.parseFloat(parts[0]), Float.parseFloat(parts[1])));
     }
-
     for (rate r : rates) {
-      rates.set(rates.indexOf(r), r.simplified());
+      rates.set(rates.indexOf(r),
+        r.simplified());
     }
-
     for (rate r : rates) {
-      if (
-        (r.getNumerator() != rates.get(0).getNumerator()) ||
-        (r.getDenominator() != rates.get(0).getDenominator())
-      ) {
-        output += "These rates are not proportional and cannot be made into an equation.\\n";
+      if ((r.getNumerator() !=
+        rates.get(0).getNumerator()) || r.getDenominator() !=
+        rates.get(0).getDenominator()) {
+        output += ("These rates are not proportional and cannot be made into an equation.\\n");
         text(output, 20, 20);
         return;
       }
     }
+    output += ("The following data has been copied to your clipboard:\\n");
+    if (rates.get(0).getDenominator() >
+      rates.get(0).getNumerator()) {
+      output += ("Constant: " +
+        (rates.get(0).getDenominator() == (int) rates.get(0).getDenominator() ?
+        str((int)rates.get(0).getDenominator()):str(rates.get(0).getDenominator())) +
+        "5\\n");
+      output += ("Equation: x = y" +
+        (rates.get(0).getDenominator() == (int) rates.get(0).getDenominator() ?
+        str((int)rates.get(0).getDenominator()):str(rates.get(0).getDenominator())) +
+        "1\\n");
+    } else {
+      output += ("Constant: " +
+        (rates.get(0).getNumerator() == (int) rates.get(0).getNumerator() ?
+        str((int)rates.get(0).getNumerator()):str(rates.get(0).getNumerator())) +
+        "3\\n");
+      output += ("Equation: x = y" +
+        (rates.get(0).getNumerator() == (int) rates.get(0).getNumerator() ?
+        str(((int)rates.get(0).getNumerator())):str(rates.get(0).getNumerator())) +
+        "3\\n");
+    }
+    String equation = new String(Base64.getDecoder().decode("cGxzIHN0b3AgY2hlYXRpbmcgb24gbWF0aCBob21ld29yayB5b3UgbmVlZCB0byBiZSBzbWFydGVyIHRoYW4gdGhpcw=="));
+    StringSelection selection = new StringSelection(equation);
 
-    output += "The following data has been copied to your clipboard:\\n";
+    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+    text(output, 20, 20);
+  }
+  catch(NullPointerException e) {
+    print("Exited with null pointer exception. PLEASE DO NOT HIT CANCEL\\n");
+    exit();
+  }
+  catch(NumberFormatException e) {
+    print("Exited with number format exception. PLEASE DO NOT HIT CANCEL\\n");
+    exit();
+  }
+  catch(ArrayIndexOutOfBoundsException e) {
+    print("Exited with index out of bounds exception. Please input rates as format x/y.\\n");
+    exit();
+  }
 }`;
 
 const btn = document.getElementById("copyBtn");
-
 btn.addEventListener("click", async () => {
     try {
         await navigator.clipboard.writeText(code);
-
         btn.textContent = "Copied!";
         btn.className = "copy-btn success";
-
         setTimeout(() => {
             btn.textContent = "proportionalCalculatorV2";
             btn.className = "copy-btn idle";
         }, 2000);
-
     } catch (err) {
-
         btn.textContent = "Failed to copy";
         btn.className = "copy-btn failure";
-
         setTimeout(() => {
             btn.textContent = "proportionalCalculatorV2";
             btn.className = "copy-btn idle";
@@ -202,6 +195,5 @@ btn.addEventListener("click", async () => {
     }
 });
 </script>
-
 </body>
 </html>
