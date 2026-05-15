@@ -1,86 +1,211 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group Chat</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processing Calculator(s)</title>
+
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        margin-bottom: 40px;
+        font-size: 48px;
+    }
+
+    .copy-btn {
+        font-size: 28px;
+        padding: 20px 40px;
+        border: none;
+        border-radius: 16px;
+        cursor: pointer;
+        color: white;
+        background: #003366;
+        box-shadow: 0 0 20px #3399ff;
+        transition: 0.25s;
+    }
+
+    .copy-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .success {
+        background: #004d00 !important;
+        box-shadow: 0 0 25px #00ff66 !important;
+    }
+
+    .failure {
+        background: #660000 !important;
+        box-shadow: 0 0 25px #ff3333 !important;
+    }
+
+    .idle {
+        background: #003366 !important;
+        box-shadow: 0 0 20px #3399ff !important;
+    }
+</style>
 </head>
+
 <body>
-    <div id="app-container">
-        <div id="auth-section" class="auth-wrapper">
-            <div class="auth-card">
-                <h2>Welcome to Group Chat</h2>
-                <p>Sign in to join the conversation</p>
-                <input type="email" id="email" placeholder="Email address" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <div class="auth-buttons">
-                    <button id="login-btn" class="btn-primary">Login</button>
-                    <button id="signup-btn" class="btn-secondary">Sign Up</button>
-                </div>
-                <p id="auth-error" class="error-msg"></p>
-            </div>
-        </div>
 
-        <div id="chat-section" class="hidden app-layout">
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <h3>Group Chat</h3>
-                    <button id="theme-toggle" class="icon-btn" title="Toggle Theme">🌓</button>
-                </div>
-                
-                <div class="channel-section">
-                    <h4 class="section-title">CHANNELS</h4>
-                    <ul id="channels" class="channel-list">
-                        <li class="active" data-id="general"><span class="hash">#</span> general</li>
-                        <li data-id="announcements"><span class="hash">#</span> announcements</li>
-                        <li data-id="premium"><span class="hash">#</span> premium 👑</li>
-                    </ul>
-                </div>
+<h1>Processing Calculator(s)</h1>
 
-                <div class="user-panel">
-                    <div class="user-info" id="profile-settings-btn" title="Click to edit profile" style="cursor: pointer;">
-                        <img class="avatar" id="user-avatar" src="" alt="avatar">
-                        <div class="user-text">
-                            <span id="current-user-email" class="email-truncate">Loading...</span>
-                            <span id="premium-badge" class="hidden" style="font-size: 0.7em; color: gold;">PREMIUM ✨</span>
-                        </div>
-                    </div>
-                    <button id="logout-btn" class="icon-btn logout" title="Logout">🚪</button>
-                </div>
-            </aside>
+<button class="copy-btn idle" id="copyBtn">
+    proportionalCalculatorV2
+</button>
 
-            <main class="chat-area">
-                <header class="chat-header">
-                    <div class="header-title">
-                        <span class="hash">#</span>
-                        <h2 id="current-channel-name">general</h2>
-                    </div>
-                    
-                    <div id="admin-panel" class="hidden">
-                        <button id="toggle-chat-btn" class="btn-outline">⏸️ Pause Chat</button>
-                    </div>
-                    <div id="premium-panel">
-                        <button id="subscribe-btn" class="btn-premium">⭐ Upgrade</button>
-                    </div>
-                </header>
+<script>
+const code = `import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.awt.datatransfer.*;
+import java.awt.Toolkit;
+import java.util.Base64;
 
-                <div id="paused-banner" class="hidden" style="background: var(--danger); color: white; text-align: center; padding: 5px;">
-                    Chat is currently paused by an administrator.
-                </div>
+class rate {
+  float top, bottom;
 
-                <div id="message-list" class="message-container"></div>
+  rate(float numerator, float denominator) {
+    top = numerator;
+    bottom = denominator;
+  }
 
-                <div class="input-area">
-                    <div class="input-wrapper">
-                        <button class="icon-btn attach-btn">➕</button>
-                        <input type="text" id="message-input" placeholder="Message #general..." autocomplete="off">
-                        <button id="send-btn" class="icon-btn send-btn">📤</button>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-    <script type="module" src="app.js"></script>
+  float getNumerator() {
+    return top;
+  }
+
+  float getDenominator() {
+    return bottom;
+  }
+
+  rate simplified() {
+    if (top > bottom) {
+      if (!isRepeating(top, bottom))
+        return new rate(top/bottom, 1);
+      else
+        return new rate(1, bottom/top);
+    }
+
+    if (!isRepeating(bottom, top))
+      return new rate(1, bottom / top);
+    else
+      return new rate(top/bottom, 1);
+  }
+
+  boolean isRepeating(float numerator, float denominator) {
+    float n = numerator;
+    float d = denominator;
+    float g = gcd(n, d);
+
+    d /= g;
+
+    while (d % 2 == 0) d /= 2;
+    while (d % 5 == 0) d /= 5;
+
+    return d != 1;
+  }
+
+  float gcd(float a, float b) {
+    while (b != 0) {
+      float t = b;
+      b = a % b;
+      a = t;
+    }
+
+    return abs(a);
+  }
+}
+
+int number;
+float rate, x, y;
+
+ArrayList<rate> rates = new ArrayList<rate>();
+
+String output;
+
+void setup() {
+  size(400, 200);
+  background(0);
+
+  try {
+    number = Integer.parseInt(
+      JOptionPane.showInputDialog(
+        "How many rates do you want to enter?"
+      )
+    );
+
+    output = "";
+
+    String stringRate;
+
+    for (int i = 0; i < number; i++) {
+      stringRate = JOptionPane.showInputDialog(
+        "Please type out the next rate as format x/y."
+      );
+
+      String[] parts = stringRate.split("/");
+
+      rates.add(
+        new rate(
+          Float.parseFloat(parts[0]),
+          Float.parseFloat(parts[1])
+        )
+      );
+    }
+
+    for (rate r : rates) {
+      rates.set(rates.indexOf(r), r.simplified());
+    }
+
+    for (rate r : rates) {
+      if (
+        (r.getNumerator() != rates.get(0).getNumerator()) ||
+        (r.getDenominator() != rates.get(0).getDenominator())
+      ) {
+        output += "These rates are not proportional and cannot be made into an equation.\\n";
+        text(output, 20, 20);
+        return;
+      }
+    }
+
+    output += "The following data has been copied to your clipboard:\\n";
+}`;
+
+const btn = document.getElementById("copyBtn");
+
+btn.addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(code);
+
+        btn.textContent = "Copied!";
+        btn.className = "copy-btn success";
+
+        setTimeout(() => {
+            btn.textContent = "proportionalCalculatorV2";
+            btn.className = "copy-btn idle";
+        }, 2000);
+
+    } catch (err) {
+
+        btn.textContent = "Failed to copy";
+        btn.className = "copy-btn failure";
+
+        setTimeout(() => {
+            btn.textContent = "proportionalCalculatorV2";
+            btn.className = "copy-btn idle";
+        }, 2000);
+    }
+});
+</script>
+
 </body>
 </html>
